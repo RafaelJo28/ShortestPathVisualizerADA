@@ -24,12 +24,6 @@ The visualizer helps users understand algorithm behavior, efficiency trade-offs,
 ---
 
 ## Features
-### Grid Interaction
-- Click to place/remove obstacles  
-- Set Start and End nodes  
-- Add multiple waypoints  
-- Assign delay values to waypoints  
-
 ### Algorithm Visualization
 - BFS (unweighted shortest path)
 - DFS (deep traversal)
@@ -42,7 +36,7 @@ The visualizer helps users understand algorithm behavior, efficiency trade-offs,
 
 ### UI Controls
 - Buttons to select algorithms
-- Buttons to add waypoint, set delay, clear board, and run visualizations
+- Buttons to randomize grid
 - Animated traversal of algorithms
 
 ---
