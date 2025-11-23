@@ -12,7 +12,7 @@ def reconstruct_path(came_from, current):
     return path[::-1]
 
 
-def djikstra(grid, start, end):
+def dijkstra(grid, start, end):
     heap = [(0, next(counter), start)]
     came_from = {}
     distances = {start: 0}

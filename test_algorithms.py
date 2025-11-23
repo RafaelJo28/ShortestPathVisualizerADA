@@ -1,5 +1,7 @@
+from algorithms.bfs import bfs
 from algorithms.dfs import dfs
 from algorithms.astar import astar
+from algorithms.dijkstra import dijkstra
 
 # Dummy Node class
 class Node:
@@ -118,3 +120,21 @@ print("Path:", path_astar)
 
 print("\nA* Path Visualization:")
 print_grid(grid, start, end, path=path_astar, visited=visited_astar)
+
+# Run BFS
+print("=== BFS ===")
+visited_bfs, path_bfs = bfs(grid, start, end)
+print("Visited:", visited_bfs)
+print("Path:", path_bfs)
+
+print("\nBFS Path Visualization:")
+print_grid(grid, start, end, path=path_bfs, visited=visited_bfs)
+
+# Run Dijkstra
+print("\n=== Dijkstra ===")
+visited_dijkstra, path_dijkstra = dijkstra(grid, start, end)
+print("Visited:", visited_dijkstra)
+print("Path:", path_dijkstra)
+
+print("\nDijkstra Path Visualization:")
+print_grid(grid, start, end, path=path_dijkstra, visited=visited_dijkstra)
