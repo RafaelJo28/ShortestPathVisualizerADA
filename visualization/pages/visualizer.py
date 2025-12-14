@@ -10,11 +10,12 @@ from visualization.pathfinding import get_algorithm_function
 class Visualizer:
     """Main visualizer page for displaying pathfinding algorithms."""
     
-    def __init__(self, window, selected_grid, grid_mode, algorithm):
+    def __init__(self, window, selected_grid, grid_mode, algorithm, seed=None):  # 🔥 ADD seed
         self.window = window
         self.selected_grid = selected_grid
         self.grid_mode = grid_mode
         self.algorithm = algorithm
+        self.seed = seed  # 🔥 STORE THE SEED
         self.buttons = []
         
         # Grid and visualization data
@@ -29,6 +30,9 @@ class Visualizer:
         self.renderer = GridRenderer(grid_offset_x=200, grid_offset_y=80, cell_size=25)
         self.animator = None
         self.is_running = False
+        
+        # Debug
+        print(f"DEBUG Visualizer: grid={selected_grid}, mode={grid_mode}, algo={algorithm}, seed={seed}")
         
         # Initialize
         self._create_layout()
@@ -48,7 +52,11 @@ class Visualizer:
     
     def _load_grid(self):
         """Load the selected grid type."""
-        seed = 0 if getattr(self, 'grid_mode', None) == 'fixed' else None
+        # 🔥 USE THE STORED SEED, NOT HARCODED 0
+        seed = self.seed if self.grid_mode == 'fixed' else None
+        
+        print(f"DEBUG _load_grid: Using seed={seed} for mode={self.grid_mode}")
+        
         self.grid = GridLoader.create_grid(self.selected_grid, seed=seed)
         rows = len(self.grid)
         cols = len(self.grid[0]) if rows > 0 else 0
@@ -195,6 +203,15 @@ class Visualizer:
 
         # Draw stats below the grid instead of on the left
         self.renderer.draw_stats_bottom(screen, stats, self.window.width, self.window.height, self.grid)
+        
+        # 🔥 ADD MODE INFO TO SCREEN
+        mode_info = f"Mode: {self.grid_mode}"
+        if self.grid_mode == 'fixed' and self.seed is not None:
+            mode_info += f" (Seed: {self.seed})"
+        
+        info_font = pygame.font.SysFont("arial", 16)
+        info_surface = info_font.render(mode_info, True, (200, 200, 200))
+        screen.blit(info_surface, (10, self.window.height - 30))
         
         # Draw buttons
         for button in self.buttons:
