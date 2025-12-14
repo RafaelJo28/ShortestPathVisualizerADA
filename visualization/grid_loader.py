@@ -1,5 +1,7 @@
 import random
 
+FIXED_GRID_SEED = 1337
+random.seed(FIXED_GRID_SEED)
 
 class Node:
     def __init__(self, row, col, is_obstacle=False, cost=1, terrain="normal"):
@@ -34,12 +36,14 @@ class GridLoader:
         if rows is None or cols is None:
             cols, rows = GridLoader.GRID_DIMENSIONS.get(grid_type, (30, 20))
 
-        state = None
-        if seed is not None:
-            state = random.getstate()
-            random.seed(seed)
-
+        # Save the current random state
+        old_state = random.getstate()
+        
         try:
+            # APPLY THE SEED
+            if seed is not None:
+                random.seed(seed)
+            
             if grid_type == "Empty Grid":
                 return GridLoader._create_empty_grid(rows, cols)
             elif grid_type == "Random Obstacles":
@@ -53,8 +57,8 @@ class GridLoader:
             else:
                 return GridLoader._create_empty_grid(rows, cols)
         finally:
-            if state is not None:
-                random.setstate(state)
+            # RESTORE original random state
+            random.setstate(old_state)
 
     # --------------------------------------------------
     # BASIC GRIDS
@@ -70,6 +74,7 @@ class GridLoader:
 
         for r in range(rows):
             for c in range(cols):
+                # 🔥 Now using seeded random from create_grid()
                 if random.random() < 0.3:
                     grid[r][c].is_obstacle = True
 
@@ -82,6 +87,7 @@ class GridLoader:
         def carve_path(r, c):
             grid[r][c].is_obstacle = False
             directions = [(0, 2), (2, 0), (0, -2), (-2, 0)]
+            # Now using seeded random shuffle
             random.shuffle(directions)
 
             for dr, dc in directions:
@@ -103,11 +109,13 @@ class GridLoader:
 
         for r in range(rows):
             for c in range(cols):
+                # Now using seeded random
                 roll = random.random()
 
                 if roll < 0.15:
                     grid[r][c].is_obstacle = True
                 elif roll < 0.45:
+                    # Also using seeded random for cost
                     grid[r][c].cost = random.randint(2, 5)
 
         return grid
