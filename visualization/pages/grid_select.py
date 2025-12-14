@@ -4,7 +4,7 @@ from visualization.pages.algorithm_select import AlgorithmSelect
 
 
 class GridSelect:
-    DEFAULT_FIXED_SEED = 42  # reproducible grid seed
+    DEFAULT_FIXED_SEED = 42  # 🔥 reproducible grid seed
 
     def __init__(self, window, grid_mode='random'):
         self.window = window
@@ -19,7 +19,7 @@ class GridSelect:
         start_y = 200
         spacing = 70
 
-        # Updated grid presets (matches GridLoader)
+        # 🔥 Updated grid presets (matches GridLoader)
         grid_types = [
             "Empty Grid",
             "Random Obstacles",
@@ -74,11 +74,14 @@ class GridSelect:
         # Decide seed based on mode
         seed = self.DEFAULT_FIXED_SEED if self.grid_mode == 'fixed' else None
 
-        # Pass everything forward
+        # 🔥 CRITICAL FIX: Pass ALL 3 parameters
+        print(f"DEBUG GridSelect: Sending grid={grid_name}, mode={self.grid_mode}, seed={seed}")
+        
         self.window.change_page(
             AlgorithmSelect,
-            grid_name,
-            seed
+            grid_name,       # selected_grid
+            self.grid_mode,  # grid_mode ← YOU WERE MISSING THIS!
+            seed             # seed
         )
 
     def toggle_mode(self):
