@@ -74,7 +74,7 @@ class GridSelect:
         # Decide seed based on mode
         seed = self.DEFAULT_FIXED_SEED if self.grid_mode == 'fixed' else None
 
-        # CRITICAL FIX: Pass ALL 3 parameters
+        # Pass ALL 3 parameters
         print(f"DEBUG GridSelect: Sending grid={grid_name}, mode={self.grid_mode}, seed={seed}")
         
         self.window.change_page(
@@ -118,5 +118,6 @@ class GridSelect:
 
         for button in self.buttons:
             button.draw(screen)
+
 
 
