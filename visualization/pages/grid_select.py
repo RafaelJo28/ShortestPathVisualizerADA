@@ -25,7 +25,7 @@ class GridSelect:
             "Random Obstacles",
             "Maze Grid",
             "Weighted Grid",
-            "Terrain Grid",     # NEW
+            "Terrain Grid",    
         ]
 
         # Mode toggle button (Random vs Fixed)
@@ -74,13 +74,13 @@ class GridSelect:
         # Decide seed based on mode
         seed = self.DEFAULT_FIXED_SEED if self.grid_mode == 'fixed' else None
 
-        # 🔥 CRITICAL FIX: Pass ALL 3 parameters
+        # CRITICAL FIX: Pass ALL 3 parameters
         print(f"DEBUG GridSelect: Sending grid={grid_name}, mode={self.grid_mode}, seed={seed}")
         
         self.window.change_page(
             AlgorithmSelect,
             grid_name,       # selected_grid
-            self.grid_mode,  # grid_mode ← YOU WERE MISSING THIS!
+            self.grid_mode,  # grid_mode 
             seed             # seed
         )
 
@@ -118,4 +118,5 @@ class GridSelect:
 
         for button in self.buttons:
             button.draw(screen)
+
 
